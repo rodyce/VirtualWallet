@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package VirtualWallet.ProtoBuf;
+
+message Person {
+  string national_identity = 1;
+  string name = 2;
+  repeated Wallet wallets = 3;
+}
+
+message NaturalPerson {
+  Person person = 1; // Base message
+
+  enum GenderType {
+    MALE = 0;
+    FEMALE = 1;
+  }
+  GenderType gender_type = 2;
+}
+
+message Transaction {
+  google.protobuf.Timestamp when = 1;
+  enum TransactionType {
+    TOP_UP = 0;
+    TRANSFER = 1;
+    PURCHASE = 2;
+    PAYMENT = 3;
+    RECONCILIATION = 4;
+  }
+  TransactionType type = 2;
+  uint64 amount = 3;
+  repeated TransactionEntry transaction_entries = 4;
+}
+
+message TransactionEntry {
+  Wallet wallet = 1;
+  Transaction transaction = 2;
+  uint64 amount = 3;
+  enum EntryType {
+    DEBIT = 0;
+    CREDIT = 1;
+  }
+  EntryType type = 4;
+}
+
+message Wallet {
+  uint64 balance = 1;
+  enum WalletType {
+    CUSTOMER = 0;
+    STORE = 1;
+    DEALER = 2;
+    BROKER = 3;
+  }
+  WalletType type = 2;
+  Person person = 3;
+  repeated TransactionEntry transaction_entries = 4;
+  string subscriber_code = 5;
+}
+
+service NaturalPersonService {
+  rpc GetAllNaturalPersons(google.protobuf.Empty)
+      returns (stream NaturalPerson);
+  rpc AddNaturalPerson(NaturalPerson) returns (NaturalPerson);
+  rpc ViewNaturalPerson(NaturalPerson) returns (NaturalPerson);
+  rpc UpdateNaturalPerson(NaturalPerson) returns (NaturalPerson);
+}
+
+service LegalPersonService {
+  rpc GetAllNaturalPersons(google.protobuf.Empty)
+      returns (stream NaturalPerson);
+  rpc AddPerson(Person) returns (Person);
+  rpc ViewPerson(Person) returns (Person);
+  rpc UpdatePerson(Person) returns (Person);
+}
+
+service PersonService {
+    rpc GetWallets(google.protobuf.Empty) returns (stream Wallet);
+    rpc AddWallet(Wallet) returns (Wallet);
+}
+
+message TopUpRequest {
+    string dealer = 1;
+    string customer = 2;
+    uint64 amount = 3;
+}
+
+message TransferRequest {
+    string origin = 1;
+    string target = 2;
+    uint64 amount = 3;
+}
+
+message PurchaseRequest {
+    string store = 1;
+    string customer = 2;
+    uint64 amount = 3;
+}
+
+message TransactionId {
+    uint64 id = 1;
+}
+
+service TransactionService {
+    rpc GetAllTransactions(google.protobuf.Empty) returns (stream Transaction) {};
+    rpc NewTopUp(TopUpRequest) returns (Transaction) {};
+    rpc NewTransfer(TransferRequest) returns (Transaction) {};
+    rpc NewPurchase(PurchaseRequest) returns (Transaction) {};
+    rpc ViewTransaction(TransactionId) returns (stream Transaction) {};
+}
