@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Messages;
+
+import "proto_defs/messages/Person.proto";
+
+message NaturalPerson {
+  Person person = 1; // Base message
+
+  enum GenderType {
+    MALE = 0;
+    FEMALE = 1;
+  }
+  GenderType gender_type = 2;
+}

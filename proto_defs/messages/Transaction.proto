@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Messages;
+
+import "google/protobuf/timestamp.proto";
+import "proto_defs/messages/TransactionEntry.proto";
+
+message Transaction {
+  google.protobuf.Timestamp when = 1;
+  enum TransactionType {
+    TOP_UP = 0;
+    TRANSFER = 1;
+    PURCHASE = 2;
+    PAYMENT = 3;
+    RECONCILIATION = 4;
+  }
+  TransactionType type = 2;
+  uint64 amount = 3;
+  repeated TransactionEntry transaction_entries = 4;
+}

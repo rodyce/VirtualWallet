@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "proto_defs/messages/Wallet.proto";
+
+package VirtualWallet.Proto.Grpc;
+
+service PersonService {
+    rpc GetWallets(google.protobuf.Empty) returns (stream Messages.Wallet);
+    rpc AddWallet(Messages.Wallet) returns (Messages.Wallet);
+}

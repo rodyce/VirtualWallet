@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Grpc;
+
+import "google/protobuf/empty.proto";
+import "proto_defs/messages/Transaction.proto";
+
+message TopUpRequest {
+  string dealer = 1;
+  string customer = 2;
+  uint64 amount = 3;
+}
+
+message TransferRequest {
+  string origin = 1;
+  string target = 2;
+  uint64 amount = 3;
+}
+
+message PurchaseRequest {
+  string store = 1;
+  string customer = 2;
+  uint64 amount = 3;
+}
+
+message TransactionId { uint64 id = 1; }
+
+service TransactionService {
+  rpc GetAllTransactions(google.protobuf.Empty)
+      returns (stream Messages.Transaction);
+  rpc NewTopUp(TopUpRequest) returns (Messages.Transaction);
+  rpc NewTransfer(TransferRequest) returns (Messages.Transaction);
+  rpc NewPurchase(PurchaseRequest) returns (Messages.Transaction);
+  rpc ViewTransaction(TransactionId) returns (stream Messages.Transaction);
+}

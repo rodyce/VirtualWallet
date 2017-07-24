@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Grpc;
+
+import "google/protobuf/empty.proto";
+import "proto_defs/messages/Person.proto";
+
+service LegalPersonService {
+  rpc GetAllLegalPersons(google.protobuf.Empty)
+      returns (stream Messages.Person);
+  rpc AddPerson(Messages.Person) returns (Messages.Person);
+  rpc ViewPerson(Messages.Person) returns (Messages.Person);
+  rpc UpdatePerson(Messages.Person) returns (Messages.Person);
+}

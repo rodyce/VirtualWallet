@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Messages;
+
+import "proto_defs/messages/Wallet.proto";
+
+message TransactionEntry {
+  Wallet wallet = 1;
+  uint64 amount = 2;
+  enum EntryType {
+    DEBIT = 0;
+    CREDIT = 1;
+  }
+  EntryType type = 3;
+}

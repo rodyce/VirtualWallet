@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Grpc;
+
+import "google/protobuf/empty.proto";
+import "proto_defs/messages/NaturalPerson.proto";
+
+service NaturalPersonService {
+  rpc GetAllNaturalPersons(google.protobuf.Empty)
+      returns (stream Messages.NaturalPerson);
+  rpc AddNaturalPerson(Messages.NaturalPerson) returns (Messages.NaturalPerson);
+  rpc ViewNaturalPerson(Messages.NaturalPerson)
+      returns (Messages.NaturalPerson);
+  rpc UpdateNaturalPerson(Messages.NaturalPerson)
+      returns (Messages.NaturalPerson);
+}

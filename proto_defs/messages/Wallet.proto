@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package VirtualWallet.Proto.Messages;
+
+import "proto_defs/messages/Person.proto";
+
+message Wallet {
+  uint64 balance = 1;
+  enum WalletType {
+    CUSTOMER = 0;
+    STORE = 1;
+    DEALER = 2;
+    BROKER = 3;
+  }
+  WalletType type = 2;
+  Person person = 3;
+  string subscriber_code = 4;
+}
