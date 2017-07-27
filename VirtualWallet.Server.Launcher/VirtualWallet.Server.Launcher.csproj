@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualWallet.Proto\VirtualWallet.Proto.csproj" />
+    <ProjectReference Include="..\VirtualWallet.Server\VirtualWallet.Server.csproj" />
+    <PackageReference Include="Grpc" Version="1.4.1" />
+    <PackageReference Include="Grpc.Core" Version="1.4.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+</Project>
